@@ -25,12 +25,12 @@ export const ApiLogIn = async (username, password) => {
     name: username,
     password: password,
   }
-  //const endpoint = 'http://meeting-booker-api.herokuapp.com/api/login';
-  const endpoint = 'http://localhost:3000/api/login';
+  const endpoint = 'http://meeting-booker-api.herokuapp.com/api/login';
+  //const endpoint = 'http://localhost:3000/api/login';
   const loggedUser = {};
   await postRequest(endpoint, body)
   .then(data => data.json())
-  //.then(data => console.log(data))
+  .then(data => console.log(data))
   .then(user => {
     loggedUser.id = user.id;
     loggedUser.name = user.name;
