@@ -6,7 +6,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ConferenceRooms from "./ConferenceRooms";
 import UserBookings from "./UserBookings";
 import Calendar from "./Calendar";
-import { LogIn } from "../actions/index";
+import Welcome from "../Components/Welcome";
+import { logIn, 
+         loadRooms 
+        } from "../actions/index";
 import Login from "../Components/Login";
 
 class App extends React.Component {
@@ -17,54 +20,71 @@ class App extends React.Component {
   }
 
   handleLogIn() {
-    const { LogIn } = this.props;
+    const { logIn } = this.props;
     const username = document.getElementById('user-name').value;
     const password = document.getElementById('user-password').value;
-    LogIn(username, password);
+    logIn(username, password);
   }
 
   render() {
-    const { loggedIn, user } = this.props;
+    const { user, rooms, loadRooms } = this.props;
+    console.log(rooms)
     return (
-      <div className="App">
+      <Router>
+        <div className="App">
         {
-          loggedIn ? (
+          !user.loggedIn ? (
             <div>
-              <div>Username: {user.name}</div>
-              <div>User ID: {user.id}</div>
+              <button onClick={loadRooms}>Check all rooms</button>
               <Options />
-              <Router>
                 <Switch>
-                  <Route path="conference_rooms" component={ConferenceRooms} />
-                  <Route path="calendar" component={Calendar} />
-                  <Route path="my_bookings" component={UserBookings} />
+                  <Route path="/" exact component={Welcome} />
+                  <Route path="/conference_rooms" render={() => (
+                    <ConferenceRooms loadRooms={loadRooms}
+                                     conferenceRooms={rooms.rooms}  />
+                  )} />
+                  <Route path="/calendar" component={Calendar} />
+                  <Route path="/my_bookings" component={UserBookings} />
                 </Switch>
-              </Router>
             </div>
           ) : (
-            <Login clickLogIn={this.handleLogIn} />
+            <div>
+              <Login clickLogIn={this.handleLogIn} />
+              <Welcome />
+            </div>
           )
         }
       </div>
+    </Router>
     );
   }
 }
 
 App.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
   user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
+    loggedIn: PropTypes.bool.isRequired,
+    pending: PropTypes.bool.isRequired,
+    name: PropTypes.string,
+    id: PropTypes.number,
   }),
+  rooms: PropTypes.shape({
+    pending: PropTypes.bool,
+    rooms: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      size: PropTypes.number,
+      projector: PropTypes.bool,
+    }))
+  })
 }
 
 const mapStateToProps = state => ({
   user: state.user,
-  loggedIn: state.loggedIn,
+  rooms: state.rooms,
 });
 
 const mapDispatchToProps = dispatch => ({
-  LogIn: (username, password) => dispatch(LogIn(username, password))
+  logIn: (username, password) => dispatch(logIn(username, password)),
+  loadRooms: () => dispatch(loadRooms()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

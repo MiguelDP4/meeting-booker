@@ -18,19 +18,22 @@ function user(state = INITIAL_USER_STATE, action) {
       return {
         pending: false,
         loggedIn: true,
-        user: action.user,
+        name: action.name,
+        id: action.id,
       };
     case LOG_IN_ERROR:
       return {
         pending: false,
         loggedIn: false,
-        user: action.user
+        name: action.name,
+        id: action.id,
       }
     case LOG_OUT:
       return {
         pending: true,
         loggedIn: false,
-        user: {},
+        name: null,
+        id: null,
       };
     default:
       return state;

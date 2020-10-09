@@ -9,12 +9,11 @@ const getRequest = async endpoint => {
 
 const postRequest = async (endpoint, body)=> {
   const response = await fetch(endpoint, {
-    mode: 'no-cors',
+    mode: 'cors',
     method: 'POST',
     headers: {'Content-Type': 'application/json',},
     body: JSON.stringify(body),
   })
-  //.then(response => console.log(response))
   .then(response => response.json())
   .catch((error) => {console.error('Error:', error)});
   return response;
@@ -26,14 +25,41 @@ export const ApiLogIn = async (username, password) => {
     password: password,
   }
   const endpoint = 'https://meeting-booker-api.herokuapp.com/api/login';
-  //const endpoint = 'http://localhost:3000/api/login';
   const loggedUser = {};
   await postRequest(endpoint, body)
-  .then(data => data.json())
-  .then(data => console.log(data))
-  .then(user => {
-    loggedUser.id = user.id;
-    loggedUser.name = user.name;
+  .then(data => {
+    if(data.user.name) {
+      loggedUser.id = data.user.id;
+      loggedUser.name = data.user.name;
+    }
   });
   return loggedUser;
+};
+
+export const ApiGetRooms = async () => {
+  const foundRooms = []
+  const endpoint = 'https://meeting-booker-api.herokuapp.com/api/conference_rooms';
+  await getRequest(endpoint)
+  .then(data => data.json())
+  .then(rooms => {
+    rooms.data.forEach(room => {
+      foundRooms.push({
+        id: room.id,
+        size: room.size,
+        projector: room.projector,
+      });
+    })
+  });
+  
+  return foundRooms.sort((a,b) => {
+    const numA = a.id;
+    const numB = b.id;
+    if(numA < numB){
+      return -1;
+    }
+    if(numB < numA){
+      return 1;
+    }
+    return 0;
+  });
 };

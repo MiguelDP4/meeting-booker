@@ -1,6 +1,7 @@
 import {
   GET_ROOMS_SUCCESS,
   GET_ROOMS_PENDING,
+  GET_ROOMS_ERROR,
   INITIAL_GET_ROOM_STATE,
 } from '../constants';
 
@@ -15,6 +16,12 @@ function rooms(state = INITIAL_GET_ROOM_STATE, action) {
       return {
         pending: false,
         rooms: action.rooms,
+      };
+    case GET_ROOMS_ERROR:
+      return {
+        ...state,
+        pending: false,
+        rooms: action.error,
       };
     default:
       return state;

@@ -1,18 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Options = () => {
   return (
-    <Router>
-      <div className="options-container">
-        <ul>
-          <li><Link to="/conference_rooms">Conference Rooms</Link></li>
-          <li><Link to="/calendar">Calendar</Link></li>
-          <li><Link to="/my_bookings">My bookings</Link></li>
-          <li><Link to="/log_out">Log Out</Link></li>
-        </ul>
-      </div>
-    </Router>
+    <div className="options-container">
+      <ul>
+        <Link to="/"><li>Home</li></Link>
+        <Link to="/conference_rooms"><li>Conference Rooms</li></Link>
+        <Link to="/calendar"><li>Calendar</li></Link>
+        <Link to="/my_bookings"><li>My Bookings</li></Link>
+        <Link to="/log_out"><li>Log Out</li></Link>
+      </ul>
+    </div>
   );
 }
 
