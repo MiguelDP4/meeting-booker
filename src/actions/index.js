@@ -4,9 +4,13 @@ import { LOG_IN_ERROR,
          GET_ROOMS_ERROR,
          GET_ROOMS_PENDING,
          GET_ROOMS_SUCCESS,
+         GET_BOOKINGS_ERROR,
+         GET_BOOKINGS_PENDING,
+         GET_BOOKINGS_SUCCESS,
         } from '../constants';
 import {  ApiLogIn,
-          ApiGetRooms
+          ApiGetRooms,
+          ApiGetBookings,
        } from '../ApiCalls'
 
 
@@ -60,6 +64,35 @@ export const loadRooms = () => async dispatch => {
   } else {
     return dispatch(LoadRoomsError({
       message: 'Could not find rooms'
+    }));
+  }
+}
+
+const loadBookingsPending = pending => ({
+  type: GET_BOOKINGS_PENDING,
+  pending
+});
+
+const loadBookingsSuccess = bookings => ({
+  GET_BOOKINGS_SUCCESS,
+  bookings
+});
+
+const loadBookingsError = error => ({
+  GET_BOOKINGS_ERROR,
+  error
+});
+
+export const loadBookings = (roomId = null, userId = null, 
+                             lowLimit = null,
+                             highLimit = null) => async dispatch => {
+  dispatch(loadBookingsPending());
+  const response = await ApiGetBookings();
+    if(response[0]) {
+    return dispatch(loadBookingsSuccess(response))
+  } else {
+    return dispatch(loadBookingsError({
+      message: 'Could not find any bookings with your parameters'
     }));
   }
 }

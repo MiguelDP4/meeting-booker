@@ -14,6 +14,7 @@ function rooms(state = INITIAL_GET_ROOM_STATE, action) {
       };
     case GET_ROOMS_SUCCESS:
       return {
+        ...state,
         pending: false,
         rooms: action.rooms,
       };
@@ -21,7 +22,7 @@ function rooms(state = INITIAL_GET_ROOM_STATE, action) {
       return {
         ...state,
         pending: false,
-        rooms: action.error,
+        error: action.error,
       };
     default:
       return state;
