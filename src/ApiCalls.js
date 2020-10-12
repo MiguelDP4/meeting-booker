@@ -63,3 +63,48 @@ export const ApiGetRooms = async () => {
     return 0;
   });
 };
+
+export const ApiGetBookings = async (roomId = null, userId = null, 
+                                     lowLimit = null,
+                                     highLimit = null) => {
+  const foundBookings = [];
+  const roomParam = roomId ? `${roomId}&` : '';
+  const userParam = userId ? `${userId}&` : '';
+  const lowLimitParam = lowLimit ? `${lowLimit}&` : '';
+  const highLimitParam = highLimit ? `${highLimit}&` : '';
+  const endpoint = `meeting-booker-api.herokuapp.com/api/booking?
+  ${roomParam}${userParam}${lowLimitParam}${highLimitParam}`;
+  await getRequest(endpoint)
+  .then(data => data.json())
+  .then(bookings => {
+    bookings.data.forEach(booking => {
+      foundBookings.push({
+        id: booking.id,
+        userId: booking.user_id,
+        roomId: booking.conference_room_id,
+        start: booking.start,
+        finish: booking.finish,
+      });
+    });
+  });
+};
+
+const ApiCreateBooking = async (userId, roomId, start, finish) => {
+  const body = {
+    user_id: userId,
+    conference_room_id: roomId,
+    start: start,
+    finish: finish,
+  }
+  const endpoint = 'https://meeting-booker-api.herokuapp.com/api/booking';
+  const createdBooking = {};
+  await postRequest(endpoint, body)
+  .then(data => {
+    createdBooking.id = data.id;
+    createdBooking.userId = data.user_id;
+    createdBooking.roomId = data.conference_room_id;
+    createdBooking.start = data.start;
+    createdBooking.finish = data.finish;
+  });
+  return createdBooking;
+};
