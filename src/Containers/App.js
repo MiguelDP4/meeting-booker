@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 import Options from "../Components/Options";
+import BookRoom from "../Components/BookRoom";
 import { PropTypes } from 'prop-types';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ConferenceRooms from "./ConferenceRooms";
@@ -8,7 +9,8 @@ import UserBookings from "./UserBookings";
 import Calendar from "./Calendar";
 import Welcome from "../Components/Welcome";
 import { logIn, 
-         loadRooms 
+         loadRooms,
+         loadBookings,
         } from "../actions/index";
 import Login from "../Components/Login";
 
@@ -17,6 +19,7 @@ class App extends React.Component {
     super();
 
     this.handleLogIn = this.handleLogIn.bind(this);
+    this.handleBooking = this.handleBooking.bind(this);
   }
 
   handleLogIn() {
@@ -26,16 +29,24 @@ class App extends React.Component {
     logIn(username, password);
   }
 
+  searchBooking(roomId = null, userId = null, 
+                lowLimit = null,
+                highLimit = null) {
+    
+  }
+
+  handleBooking(roomId, userId, start, duration) {
+
+  }
+
   render() {
     const { user, rooms, loadRooms } = this.props;
-    console.log(rooms)
     return (
       <Router>
         <div className="App">
         {
           !user.loggedIn ? (
             <div>
-              <button onClick={loadRooms}>Check all rooms</button>
               <Options />
                 <Switch>
                   <Route path="/" exact component={Welcome} />
@@ -45,6 +56,11 @@ class App extends React.Component {
                   )} />
                   <Route path="/calendar" component={Calendar} />
                   <Route path="/my_bookings" component={UserBookings} />
+                  {rooms.rooms.length > 0 ? rooms.rooms.map(room => (
+                    <Route key={`book-room-${room.id}-link`} path={`/book_room_${room.id}`} render={() => (
+                      <BookRoom bookRoom={this.handleBooking} room={room} />
+                    )} />
+                  )) : <div></div>}
                 </Switch>
             </div>
           ) : (
@@ -80,11 +96,16 @@ App.propTypes = {
 const mapStateToProps = state => ({
   user: state.user,
   rooms: state.rooms,
+  bookings: state.bookings,
 });
 
 const mapDispatchToProps = dispatch => ({
   logIn: (username, password) => dispatch(logIn(username, password)),
   loadRooms: () => dispatch(loadRooms()),
+  searchBooking: (roomId = null, 
+                  userId = null, 
+                  lowLimit = null,
+                  highLimit = null) => dispatch(loadBookings(roomId, userId, lowLimit, highLimit)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
