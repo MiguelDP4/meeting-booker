@@ -7,10 +7,14 @@ import { LOG_IN_ERROR,
          GET_BOOKINGS_ERROR,
          GET_BOOKINGS_PENDING,
          GET_BOOKINGS_SUCCESS,
+         POST_BOOKING_SUCCESS,
+         POST_BOOKING_PENDING,
+         POST_BOOKING_ERROR,
         } from '../constants';
 import {  ApiLogIn,
           ApiGetRooms,
           ApiGetBookings,
+          ApiCreateBooking,
        } from '../ApiCalls'
 
 
@@ -74,12 +78,12 @@ const loadBookingsPending = pending => ({
 });
 
 const loadBookingsSuccess = bookings => ({
-  GET_BOOKINGS_SUCCESS,
+  type: GET_BOOKINGS_SUCCESS,
   bookings
 });
 
 const loadBookingsError = error => ({
-  GET_BOOKINGS_ERROR,
+  type: GET_BOOKINGS_ERROR,
   error
 });
 
@@ -92,6 +96,33 @@ export const loadBookings = (roomId = null, userId = null,
     return dispatch(loadBookingsSuccess(response))
   } else {
     return dispatch(loadBookingsError({
+      message: 'Could not find any bookings with your parameters'
+    }));
+  }
+}
+
+const createBookingPending = pending => ({
+  type: POST_BOOKING_PENDING,
+  pending
+});
+
+const createBookingSuccess = posted => ({
+  type: POST_BOOKING_SUCCESS,
+  posted
+});
+
+const createBookingError = error => ({
+  type: POST_BOOKING_ERROR,
+  error
+});
+
+export const createBooking = (roomId, userId, start, finish) => async dispatch => {
+  dispatch(createBookingPending());
+  const response = await ApiCreateBooking(roomId, userId, start, finish);
+    if(response[0]) {
+    return dispatch(createBookingSuccess(response))
+  } else {
+    return dispatch(createBookingError({
       message: 'Could not find any bookings with your parameters'
     }));
   }

@@ -11,6 +11,7 @@ import Welcome from "../Components/Welcome";
 import { logIn, 
          loadRooms,
          loadBookings,
+         createBooking,
         } from "../actions/index";
 import Login from "../Components/Login";
 
@@ -18,8 +19,18 @@ class App extends React.Component {
   constructor() {
     super();
 
+    this.handleChangeSelectedRoom = this.handleChangeSelectedRoom.bind(this);
     this.handleLogIn = this.handleLogIn.bind(this);
     this.handleBooking = this.handleBooking.bind(this);
+    this.handleBookingChange = this.handleBookingChange.bind(this);
+    this.state = {
+      newBooking: {
+        room: "",
+        date: "",
+        time: "",
+        duration: "30",
+      },
+    }
   }
 
   handleLogIn() {
@@ -35,17 +46,71 @@ class App extends React.Component {
     
   }
 
-  handleBooking(roomId, userId, start, duration) {
+  handleBooking(event) {
+    const { bookRoom, user } = this.props;
+    const { newBooking } = this.state;
+    const date = newBooking.date;
+    const room = newBooking.room;
+    const time = newBooking.time;
+    const duration = newBooking.duration;
+    const start = new Date(Date.parse(`${date} ${time}`));
+    const finish = new Date(start.getTime() + duration*60000);
 
+    bookRoom(room, user.id, start, finish);
+
+    event.preventDefault();
+  }
+
+  handleChangeSelectedRoom(roomId) {
+    this.setState({
+      ...this.state,
+      newBooking: {
+        ...this.state.newBooking,
+        room: roomId,
+      }
+    });
+  }
+
+  handleBookingChange(event) {
+    const { newBooking } = this.state;
+    let newState = {};
+    switch(event.target.id) {
+    case "book-date":
+      newState = {
+        ...newBooking,
+        date: event.target.value,
+      };
+      break;
+    case "book-time":
+      newState = {
+        ...newBooking,
+        time: event.target.value,
+      };
+      break;
+      case "book-duration":
+      newState = {
+        ...newBooking,
+        duration: event.target.value,
+      };
+      break;
+      default:
+      newState = {
+        ...newBooking,
+      };
+    }
+    this.setState({
+      ...this.state,
+      newBooking: newState,
+    });
   }
 
   render() {
-    const { user, rooms, loadRooms } = this.props;
+    const { user, rooms, loadRooms, bookings } = this.props;
     return (
       <Router>
         <div className="App">
         {
-          !user.loggedIn ? (
+          user.loggedIn ? (
             <div>
               <Options />
                 <Switch>
@@ -58,7 +123,12 @@ class App extends React.Component {
                   <Route path="/my_bookings" component={UserBookings} />
                   {rooms.rooms.length > 0 ? rooms.rooms.map(room => (
                     <Route key={`book-room-${room.id}-link`} path={`/book_room_${room.id}`} render={() => (
-                      <BookRoom bookRoom={this.handleBooking} room={room} />
+                      <BookRoom submit={this.handleBooking} 
+                                handleChange={this.handleBookingChange} 
+                                room={room}
+                                bookData={this.state.newBooking}
+                                posted={bookings}
+                                changeRoom={this.handleChangeSelectedRoom}/>
                     )} />
                   )) : <div></div>}
                 </Switch>
@@ -106,6 +176,10 @@ const mapDispatchToProps = dispatch => ({
                   userId = null, 
                   lowLimit = null,
                   highLimit = null) => dispatch(loadBookings(roomId, userId, lowLimit, highLimit)),
+  bookRoom: (roomId,
+             userId,
+             start,
+             finish) => dispatch(createBooking(roomId, userId, start, finish)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

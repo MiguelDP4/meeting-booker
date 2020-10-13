@@ -10,18 +10,17 @@ export const INITIAL_GET_ROOM_STATE = {
 export const GET_BOOKINGS_SUCCESS = 'GET_BOOKINGS_SUCCESS';
 export const GET_BOOKINGS_PENDING = 'GET_BOOKINGS_PENDING';
 export const GET_BOOKINGS_ERROR = 'GET_BOOKINGS_ERROR';
-export const INITIAL_GET_BOOKING_STATE = {
-  pending: false,
-  bookings: [],
-};
-
 export const POST_BOOKING_SUCCESS = 'POST_BOOKING_SUCCESS';
 export const POST_BOOKING_PENDING = 'POST_BOOKING_PENDING';
 export const POST_BOOKING_ERROR = 'POST_BOOKING_ERROR';
-export const INITIAL_POST_BOOKING_STATE = {
+export const INITIAL_GET_BOOKING_STATE = {
   pending: false,
-  booking: {},
+  bookings: [],
+  posted: {},
 };
+
+
+
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_PENDING = 'LOG_IN_PENDING';

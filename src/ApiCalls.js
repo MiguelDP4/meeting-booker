@@ -89,7 +89,7 @@ export const ApiGetBookings = async (roomId = null, userId = null,
   });
 };
 
-const ApiCreateBooking = async (userId, roomId, start, finish) => {
+export const ApiCreateBooking = async (userId, roomId, start, finish) => {
   const body = {
     user_id: userId,
     conference_room_id: roomId,
@@ -100,6 +100,7 @@ const ApiCreateBooking = async (userId, roomId, start, finish) => {
   const createdBooking = {};
   await postRequest(endpoint, body)
   .then(data => {
+    console.log(data);
     createdBooking.id = data.id;
     createdBooking.userId = data.user_id;
     createdBooking.roomId = data.conference_room_id;

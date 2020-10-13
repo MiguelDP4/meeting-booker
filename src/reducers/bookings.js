@@ -3,6 +3,9 @@ import {
   GET_BOOKINGS_PENDING,
   GET_BOOKINGS_ERROR,
   INITIAL_GET_BOOKING_STATE,
+  POST_BOOKING_ERROR,
+  POST_BOOKING_PENDING,
+  POST_BOOKING_SUCCESS,
 } from '../constants';
 
 function bookings(state = INITIAL_GET_BOOKING_STATE, action) {
@@ -16,13 +19,30 @@ function bookings(state = INITIAL_GET_BOOKING_STATE, action) {
       return {
         ...state,
         pending: false,
-        rooms: action.bookings,
+        bookings: action.bookings,
       };
     case GET_BOOKINGS_ERROR:
       return {
         ...state,
         pending: false,
         error: action.error,
+      };
+    case POST_BOOKING_ERROR:
+      return {
+        ...state,
+        pending: false,
+        error: action.error,
+      };
+    case POST_BOOKING_PENDING:
+      return {
+        ...state,
+        pending: true,
+      };
+    case POST_BOOKING_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        posted: action.posted,
       };
     default:
       return state;
