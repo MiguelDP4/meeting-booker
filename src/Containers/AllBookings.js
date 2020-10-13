@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Calendar() {
+function AllBookings() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function Calendar() {
   );
 }
 
-export default Calendar;
+export default AllBookings;

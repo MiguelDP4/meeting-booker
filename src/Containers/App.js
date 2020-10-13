@@ -6,7 +6,8 @@ import { PropTypes } from 'prop-types';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ConferenceRooms from "./ConferenceRooms";
 import UserBookings from "./UserBookings";
-import Calendar from "./Calendar";
+import AllBookings from "./AllBookings";
+import RoomBookings from "./RoomBookings";
 import Welcome from "../Components/Welcome";
 import { logIn, 
          loadRooms,
@@ -43,7 +44,8 @@ class App extends React.Component {
   searchBooking(roomId = null, userId = null, 
                 lowLimit = null,
                 highLimit = null) {
-    
+    const { searchBooking } = this.props;
+    searchBooking(roomId, userId, lowLimit, highLimit);
   }
 
   handleBooking(event) {
@@ -55,9 +57,7 @@ class App extends React.Component {
     const duration = newBooking.duration;
     const start = new Date(Date.parse(`${date} ${time}`));
     const finish = new Date(start.getTime() + duration*60000);
-
     bookRoom(room, user.id, start, finish);
-
     event.preventDefault();
   }
 
@@ -105,7 +105,12 @@ class App extends React.Component {
   }
 
   render() {
-    const { user, rooms, loadRooms, bookings } = this.props;
+    const { user,
+            rooms,
+            loadRooms,
+            bookings,
+            searchBooking
+          } = this.props;
     return (
       <Router>
         <div className="App">
@@ -119,18 +124,33 @@ class App extends React.Component {
                     <ConferenceRooms loadRooms={loadRooms}
                                      conferenceRooms={rooms.rooms}  />
                   )} />
-                  <Route path="/calendar" component={Calendar} />
-                  <Route path="/my_bookings" component={UserBookings} />
-                  {rooms.rooms.length > 0 ? rooms.rooms.map(room => (
-                    <Route key={`book-room-${room.id}-link`} path={`/book_room_${room.id}`} render={() => (
-                      <BookRoom submit={this.handleBooking} 
-                                handleChange={this.handleBookingChange} 
-                                room={room}
-                                bookData={this.state.newBooking}
-                                posted={bookings}
-                                changeRoom={this.handleChangeSelectedRoom}/>
-                    )} />
-                  )) : <div></div>}
+                  <Route path="/calendar" component={AllBookings} />
+                  <Route path="/my_bookings" render={() => (
+                    <UserBookings user={user}
+                                  loadBookings={searchBooking}
+                                  bookings={bookings.bookings}
+                    />
+                  )} />
+                {rooms.rooms.length > 0 && rooms.rooms.map(room => (
+                  <Route key={`book-room-${room.id}-link`} path={`/book_room_${room.id}`} render={() => (
+                    <BookRoom submit={this.handleBooking} 
+                              handleChange={this.handleBookingChange} 
+                              room={room}
+                              bookData={this.state.newBooking}
+                              posted={bookings}
+                              changeRoom={this.handleChangeSelectedRoom}/>
+                  )} />
+                ))}
+                {rooms.rooms.length > 0 && rooms.rooms.map(room => (
+                    <Route key={`bookings-room-${room.id}-link`} 
+                    path={`/bookings_room_${room.id}`}
+                    render={() => (
+                      <RoomBookings room={room}
+                                    loadBookings={searchBooking}
+                                    bookings={bookings.bookings}
+                      />
+                  )} />
+                ))}
                 </Switch>
             </div>
           ) : (

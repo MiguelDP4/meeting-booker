@@ -14,8 +14,11 @@ function ConferenceRooms(props) {
             <div>Room {room.id}</div>
             <div>Size: {room.size}</div>
             <div>Projector: {room.projector ? "yes" : "no"}</div>
-            <Link to={`/book_room_${room.id}`}>
+            <Link key={`room-${room.id}-booker-link`} to={`/book_room_${room.id}`}>
               Book This Room
+            </Link>
+            <Link key={`room-${room.id}-bookings-link`} to={`/bookings_room_${room.id}`}>
+              Check this room's bookings
             </Link>
           </div>
         ))

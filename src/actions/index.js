@@ -91,7 +91,7 @@ export const loadBookings = (roomId = null, userId = null,
                              lowLimit = null,
                              highLimit = null) => async dispatch => {
   dispatch(loadBookingsPending());
-  const response = await ApiGetBookings();
+  const response = await ApiGetBookings(roomId, userId, lowLimit, highLimit);
     if(response[0]) {
     return dispatch(loadBookingsSuccess(response))
   } else {

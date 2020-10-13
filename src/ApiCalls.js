@@ -68,12 +68,13 @@ export const ApiGetBookings = async (roomId = null, userId = null,
                                      lowLimit = null,
                                      highLimit = null) => {
   const foundBookings = [];
-  const roomParam = roomId ? `${roomId}&` : '';
-  const userParam = userId ? `${userId}&` : '';
-  const lowLimitParam = lowLimit ? `${lowLimit}&` : '';
-  const highLimitParam = highLimit ? `${highLimit}&` : '';
-  const endpoint = `meeting-booker-api.herokuapp.com/api/booking?
-  ${roomParam}${userParam}${lowLimitParam}${highLimitParam}`;
+  const roomParam = roomId ? `conference_room_id=${roomId}&` : '';
+  const userParam = userId ? `user_id=${userId}&` : '';
+  const lowLimitParam = lowLimit ? `low_limit=${lowLimit}&` : '';
+  const highLimitParam = highLimit ? `high_limit=${highLimit}&` : '';
+  console.log(`room: ${roomParam}`);
+  const endpoint = `https://meeting-booker-api.herokuapp.com/api/booking?${roomParam}${userParam}${lowLimitParam}${highLimitParam}`;
+  console.log(endpoint);
   await getRequest(endpoint)
   .then(data => data.json())
   .then(bookings => {
@@ -87,6 +88,7 @@ export const ApiGetBookings = async (roomId = null, userId = null,
       });
     });
   });
+  return foundBookings;
 };
 
 export const ApiCreateBooking = async (userId, roomId, start, finish) => {
