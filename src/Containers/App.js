@@ -1,4 +1,5 @@
 import React from "react";
+import { addMinutes } from 'date-fns'
 import { connect } from 'react-redux';
 import Options from "../Components/Options";
 import BookRoom from "../Components/BookRoom";
@@ -9,7 +10,8 @@ import UserBookings from "./UserBookings";
 import AllBookings from "./AllBookings";
 import RoomBookings from "./RoomBookings";
 import Welcome from "../Components/Welcome";
-import { logIn, 
+import { logIn,
+         logOut,
          loadRooms,
          loadBookings,
          createBooking,
@@ -20,10 +22,13 @@ class App extends React.Component {
   constructor() {
     super();
 
+    this.logOut = this.logOut.bind(this);
     this.handleChangeSelectedRoom = this.handleChangeSelectedRoom.bind(this);
     this.handleLogIn = this.handleLogIn.bind(this);
     this.handleBooking = this.handleBooking.bind(this);
     this.handleBookingChange = this.handleBookingChange.bind(this);
+    this.handleSearchBookingChange = this.handleSearchBookingChange.bind(this);
+    this.searchBookingByDate = this.searchBookingByDate.bind(this);
     this.state = {
       newBooking: {
         room: "",
@@ -31,7 +36,32 @@ class App extends React.Component {
         time: "",
         duration: "30",
       },
+      searchBooking: {
+        userId: "",
+        roomId: "",
+        start: "",
+        finish: "",
+      },
     }
+  }
+
+  logOut() {
+    const { user } = this.props;
+    this.setState({
+      newBooking: {
+        room: "",
+        date: "",
+        time: "",
+        duration: "30",
+      },
+      searchBooking: {
+        userId: "",
+        roomId: "",
+        start: "",
+        finish: "",
+      },
+    });
+    logOut();
   }
 
   handleLogIn() {
@@ -48,6 +78,12 @@ class App extends React.Component {
     searchBooking(roomId, userId, lowLimit, highLimit);
   }
 
+  searchBookingByDate(event) {
+    const { searchBooking } = this.state
+    this.searchBooking(searchBooking.roomId, null, searchBooking.start, searchBooking.finish);
+    event.preventDefault();
+  }
+
   handleBooking(event) {
     const { bookRoom, user } = this.props;
     const { newBooking } = this.state;
@@ -56,7 +92,7 @@ class App extends React.Component {
     const time = newBooking.time;
     const duration = newBooking.duration;
     const start = new Date(Date.parse(`${date} ${time}`));
-    const finish = new Date(start.getTime() + duration*60000);
+    const finish = addMinutes(start, duration);
     bookRoom(room, user.id, start, finish);
     event.preventDefault();
   }
@@ -104,12 +140,53 @@ class App extends React.Component {
     });
   }
 
+  handleSearchBookingChange(event) {
+    const { searchBooking } = this.state;
+    let newState = {};
+    switch(event.target.id) {
+    case "start-book-date":
+      newState = {
+        ...searchBooking,
+        start: event.target.value,
+      };
+      break;
+    case "finish-book-date":
+      newState = {
+        ...searchBooking,
+        finish: event.target.value,
+      };
+      break;
+      case "user-id-search":
+      newState = {
+        ...searchBooking,
+        userId: event.target.value,
+      };
+      case "room-id-search":
+      newState = {
+        ...searchBooking,
+        roomId: event.target.value,
+      };
+      break;
+      default:
+      newState = {
+        userId: "",
+        roomId: "",
+        start: "",
+        finish: "",
+      };
+    }
+    this.setState({
+      ...this.state,
+      searchBooking: newState,
+    });
+  }
+
   render() {
     const { user,
             rooms,
             loadRooms,
             bookings,
-            searchBooking
+            searchBooking,
           } = this.props;
     return (
       <Router>
@@ -117,14 +194,18 @@ class App extends React.Component {
         {
           user.loggedIn ? (
             <div>
-              <Options />
+              <Options logOut={this.logOut}/>
                 <Switch>
                   <Route path="/" exact component={Welcome} />
                   <Route path="/conference_rooms" render={() => (
                     <ConferenceRooms loadRooms={loadRooms}
                                      conferenceRooms={rooms.rooms}  />
                   )} />
-                  <Route path="/calendar" component={AllBookings} />
+                  <Route path="/search_bookings" render={() => (
+                    <AllBookings loadBookings={this.searchBookingByDate}
+                                 bookings={bookings.bookings}
+                                 handleChange={this.handleSearchBookingChange}/>
+                  )} />
                   <Route path="/my_bookings" render={() => (
                     <UserBookings user={user}
                                   loadBookings={searchBooking}
@@ -191,6 +272,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   logIn: (username, password) => dispatch(logIn(username, password)),
+  logOut: () => dispatch(logOut()),
   loadRooms: () => dispatch(loadRooms()),
   searchBooking: (roomId = null, 
                   userId = null, 

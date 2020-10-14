@@ -10,6 +10,7 @@ import { LOG_IN_ERROR,
          POST_BOOKING_SUCCESS,
          POST_BOOKING_PENDING,
          POST_BOOKING_ERROR,
+         LOG_OUT,
         } from '../constants';
 import {  ApiLogIn,
           ApiGetRooms,
@@ -45,6 +46,10 @@ export const logIn = (username, password) => async dispatch => {
   }
 }
 
+export const logOut = () => ({
+  type: LOG_OUT,
+});
+
 const LoadRoomsPending = pending => ({
   type: GET_ROOMS_PENDING,
   pending
@@ -63,7 +68,7 @@ const LoadRoomsSuccess = rooms => ({
 export const loadRooms = () => async dispatch => {
   dispatch(LoadRoomsPending());
   const response = await ApiGetRooms();
-    if(response[0]) {
+    if(response) {
     return dispatch(LoadRoomsSuccess(response))
   } else {
     return dispatch(LoadRoomsError({
@@ -92,7 +97,7 @@ export const loadBookings = (roomId = null, userId = null,
                              highLimit = null) => async dispatch => {
   dispatch(loadBookingsPending());
   const response = await ApiGetBookings(roomId, userId, lowLimit, highLimit);
-    if(response[0]) {
+    if(response) {
     return dispatch(loadBookingsSuccess(response))
   } else {
     return dispatch(loadBookingsError({
@@ -116,10 +121,10 @@ const createBookingError = error => ({
   error
 });
 
-export const createBooking = (roomId, userId, start, finish) => async dispatch => {
+export const createBooking = (userId, roomId, start, finish) => async dispatch => {
   dispatch(createBookingPending());
   const response = await ApiCreateBooking(roomId, userId, start, finish);
-    if(response[0]) {
+    if(response) {
     return dispatch(createBookingSuccess(response))
   } else {
     return dispatch(createBookingError({
