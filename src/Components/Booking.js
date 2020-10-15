@@ -10,7 +10,6 @@ const Booking = (props) => {
   return (
     <div>
       <div>Room: {bookingInfo.roomId}</div>
-      <div>User: {bookingInfo.userId}</div>
       <div>Meeting Start: {bookingInfo.start}</div>
       <div>Meeting End: {bookingInfo.finish}</div>
       { bookingInfo.userId == user.id && (

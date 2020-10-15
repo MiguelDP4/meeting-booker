@@ -265,6 +265,7 @@ class App extends React.Component {
                                     bookings={bookings.bookings}
                                     deleteBooking={this.deleteBooking}
                                     changeBooking={this.handleChangeSelectedBooking}
+                                    user={user}
                       />
                   )} />
                 ))}
