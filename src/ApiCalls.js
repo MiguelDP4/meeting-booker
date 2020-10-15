@@ -99,12 +99,12 @@ export const ApiCreateBooking = async (userId, roomId, start, finish) => {
   const endpoint = 'https://meeting-booker-api.herokuapp.com/api/booking';
   const createdBooking = {};
   await postRequest(endpoint, body)
-  .then(data => {
-    createdBooking.id = data.id;
-    createdBooking.userId = data.user_id;
-    createdBooking.roomId = data.conference_room_id;
-    createdBooking.start = data.start;
-    createdBooking.finish = data.finish;
+  .then(booking => {
+    createdBooking.id = booking.data.id;
+    createdBooking.userId = booking.data.user_id;
+    createdBooking.roomId = booking.data.conference_room_id;
+    createdBooking.start = booking.data.start;
+    createdBooking.finish = booking.data.finish;
   });
   return createdBooking;
 };
