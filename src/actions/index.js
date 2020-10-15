@@ -11,6 +11,7 @@ import { LOG_IN_ERROR,
          POST_BOOKING_PENDING,
          POST_BOOKING_ERROR,
          LOG_OUT,
+         CLEAR_LOCAL_BOOKINGS,
         } from '../constants';
 import {  ApiLogIn,
           ApiGetRooms,
@@ -76,6 +77,10 @@ export const loadRooms = () => async dispatch => {
     }));
   }
 }
+
+export const clearBookings = () => ({
+  type: CLEAR_LOCAL_BOOKINGS,
+});
 
 const loadBookingsPending = pending => ({
   type: GET_BOOKINGS_PENDING,

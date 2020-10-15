@@ -6,6 +6,7 @@ import {
   POST_BOOKING_ERROR,
   POST_BOOKING_PENDING,
   POST_BOOKING_SUCCESS,
+  CLEAR_LOCAL_BOOKINGS,
 } from '../constants';
 
 function bookings(state = INITIAL_GET_BOOKING_STATE, action) {
@@ -43,6 +44,11 @@ function bookings(state = INITIAL_GET_BOOKING_STATE, action) {
         ...state,
         pending: false,
         posted: action.posted,
+      };
+    case CLEAR_LOCAL_BOOKINGS:
+      return {
+        ...state,
+        bookings: [],
       };
     default:
       return state;

@@ -15,6 +15,7 @@ import { logIn,
          loadRooms,
          loadBookings,
          createBooking,
+         clearBookings,
         } from "../actions/index";
 import Login from "../Components/Login";
 
@@ -29,6 +30,7 @@ class App extends React.Component {
     this.handleBookingChange = this.handleBookingChange.bind(this);
     this.handleSearchBookingChange = this.handleSearchBookingChange.bind(this);
     this.searchBookingByDate = this.searchBookingByDate.bind(this);
+    this.clearLocalBookings = this.clearLocalBookings.bind(this);
     this.state = {
       newBooking: {
         room: "",
@@ -46,7 +48,7 @@ class App extends React.Component {
   }
 
   logOut() {
-    const { user } = this.props;
+    const { user, logOut } = this.props;
     this.setState({
       newBooking: {
         room: "",
@@ -82,6 +84,11 @@ class App extends React.Component {
     const { searchBooking } = this.state
     this.searchBooking(searchBooking.roomId, null, searchBooking.start, searchBooking.finish);
     event.preventDefault();
+  }
+
+  clearLocalBookings() {
+    const { clearBookings, bookings } = this.props;
+    clearBookings();
   }
 
   handleBooking(event) {
@@ -194,7 +201,7 @@ class App extends React.Component {
         {
           user.loggedIn ? (
             <div>
-              <Options logOut={this.logOut}/>
+              <Options logOut={this.logOut} clearBookings={this.clearLocalBookings} />
                 <Switch>
                   <Route path="/" exact component={Welcome} />
                   <Route path="/conference_rooms" render={() => (
@@ -274,6 +281,7 @@ const mapDispatchToProps = dispatch => ({
   logIn: (username, password) => dispatch(logIn(username, password)),
   logOut: () => dispatch(logOut()),
   loadRooms: () => dispatch(loadRooms()),
+  clearBookings: () => dispatch(clearBookings()),
   searchBooking: (roomId = null, 
                   userId = null, 
                   lowLimit = null,

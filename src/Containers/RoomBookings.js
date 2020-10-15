@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Booking from '../Components/Booking';
 
 function RoomBookings(props) {
   const { room, loadBookings, bookings } = props;
@@ -6,9 +7,7 @@ function RoomBookings(props) {
   return (
     <div>
       {bookings.map(booking => (
-        <div key={`room-${room.id}-booking-${booking.id}`}>
-          {booking.id}
-        </div>
+        <Booking bookingInfo={booking} />
         ))}
     </div>
   );
