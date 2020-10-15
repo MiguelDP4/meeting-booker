@@ -2,7 +2,12 @@ import React from 'react';
 import Booking from '../Components/Booking';
 
 function AllBookings(props) {
-  const { loadBookings, bookings, handleChange, user } = props;
+  const { loadBookings,
+          bookings,
+          handleChange,
+          user,
+          deleteBooking,
+        } = props;
   
   return (
     <div>
@@ -24,12 +29,12 @@ function AllBookings(props) {
               name="room-id-search"
               onChange={handleChange} />
         <button type="submit">
-        Search
+          Search
         </button>
       </form>
       <div>
         {bookings.length > 0 ? bookings.map(booking => (
-          <Booking bookingInfo={booking} user={user} />
+          <Booking bookingsList={bookings} bookingInfo={booking} user={user} deleteBooking={deleteBooking} />
         )) : (<div>Could not find any bookings</div>)}
       </div>
     </div>

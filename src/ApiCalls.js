@@ -19,6 +19,17 @@ const postRequest = async (endpoint, body)=> {
   return response;
 };
 
+const deleteRequest = async (endpoint)=> {
+  const response = await fetch(endpoint, {
+    mode: 'cors',
+    method: 'DELETE',
+    headers: {'Content-Type': 'application/json',},
+  })
+  .then(response => response.json())
+  .catch((error) => {console.error('Error:', error)});
+  return response;
+};
+
 export const ApiLogIn = async (username, password) => {
   const body = {
     name: username,
@@ -107,4 +118,21 @@ export const ApiCreateBooking = async (userId, roomId, start, finish) => {
     createdBooking.finish = booking.data.finish;
   });
   return createdBooking;
+};
+
+export const ApiDeleteBooking = async (bookingId) => {
+  const body = {
+    id: bookingId,
+  }
+  const endpoint = `https://meeting-booker-api.herokuapp.com/api/booking/${bookingId}`;
+  const deletedBooking = {};
+  await deleteRequest(endpoint, body)
+  .then(booking => {
+    deletedBooking.id = booking.data.id;
+    deletedBooking.userId = booking.data.user_id;
+    deletedBooking.roomId = booking.data.conference_room_id;
+    deletedBooking.start = booking.data.start;
+    deletedBooking.finish = booking.data.finish;
+  });
+  return deletedBooking;
 };

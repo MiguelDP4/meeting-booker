@@ -10,6 +10,9 @@ import { LOG_IN_ERROR,
          POST_BOOKING_SUCCESS,
          POST_BOOKING_PENDING,
          POST_BOOKING_ERROR,
+         DELETE_BOOKING_ERROR,
+         DELETE_BOOKING_PENDING,
+         DELETE_BOOKING_SUCCESS,
          LOG_OUT,
          CLEAR_LOCAL_BOOKINGS,
         } from '../constants';
@@ -17,6 +20,7 @@ import {  ApiLogIn,
           ApiGetRooms,
           ApiGetBookings,
           ApiCreateBooking,
+          ApiDeleteBooking,
        } from '../ApiCalls'
 
 
@@ -136,4 +140,31 @@ export const createBooking = (userId, roomId, start, finish) => async dispatch =
       message: 'Could not find any bookings with your parameters'
     }));
   }
-}
+};
+
+const deleteBookingPending = pending => ({
+  type: DELETE_BOOKING_PENDING,
+  pending
+});
+
+const deleteBookingSuccess = deleted => ({
+  type: DELETE_BOOKING_SUCCESS,
+  deleted
+});
+
+const deleteBookingError = error => ({
+  type: DELETE_BOOKING_ERROR,
+  error
+});
+
+export const deleteBooking = (bookingId) => async dispatch => {
+  dispatch(deleteBookingPending());
+  const response = await ApiDeleteBooking(bookingId);
+    if(response) {
+    return dispatch(deleteBookingSuccess(response))
+  } else {
+    return dispatch(deleteBookingError({
+      message: 'Could not find any bookings with your parameters'
+    }));
+  }
+};

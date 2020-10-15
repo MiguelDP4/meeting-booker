@@ -6,6 +6,9 @@ import {
   POST_BOOKING_ERROR,
   POST_BOOKING_PENDING,
   POST_BOOKING_SUCCESS,
+  DELETE_BOOKING_ERROR,
+  DELETE_BOOKING_PENDING,
+  DELETE_BOOKING_SUCCESS,
   CLEAR_LOCAL_BOOKINGS,
 } from '../constants';
 
@@ -50,6 +53,27 @@ function bookings(state = INITIAL_GET_BOOKING_STATE, action) {
         ...state,
         bookings: [],
       };
+    case DELETE_BOOKING_SUCCESS:
+      const newBookingsArray = state.bookings;
+      const indexToDelete = newBookingsArray
+      .indexOf(newBookingsArray.find(booking => booking.id == action.deleted.id));
+      newBookingsArray.splice(indexToDelete, 1);
+      return {
+        ...state,
+        pending: false,
+        bookings: newBookingsArray,
+      };
+    case DELETE_BOOKING_PENDING:
+      return {
+        ...state,
+        pending: true,
+      };
+    case DELETE_BOOKING_ERROR:
+      return {
+        ...state,
+        pending: false,
+        error: action.error,
+      }
     default:
       return state;
   }

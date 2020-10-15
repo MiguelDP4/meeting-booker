@@ -16,8 +16,10 @@ import { logIn,
          loadBookings,
          createBooking,
          clearBookings,
+         deleteBooking,
         } from "../actions/index";
 import Login from "../Components/Login";
+import bookings from "../reducers/bookings";
 
 class App extends React.Component {
   constructor() {
@@ -31,14 +33,17 @@ class App extends React.Component {
     this.handleSearchBookingChange = this.handleSearchBookingChange.bind(this);
     this.searchBookingByDate = this.searchBookingByDate.bind(this);
     this.clearLocalBookings = this.clearLocalBookings.bind(this);
+    this.deleteBooking = this.deleteBooking.bind(this);
     this.state = {
       newBooking: {
+        bookingId: "",
         room: "",
         date: "",
         time: "",
         duration: "30",
       },
       searchBooking: {
+        bookingId: "",
         userId: "",
         roomId: "",
         start: "",
@@ -48,15 +53,17 @@ class App extends React.Component {
   }
 
   logOut() {
-    const { user, logOut } = this.props;
+    const { logOut } = this.props;
     this.setState({
       newBooking: {
+        bookingId: "",
         room: "",
         date: "",
         time: "",
         duration: "30",
       },
       searchBooking: {
+        bookingId: "",
         userId: "",
         roomId: "",
         start: "",
@@ -104,12 +111,27 @@ class App extends React.Component {
     event.preventDefault();
   }
 
+  deleteBooking(bookingId) {
+    const { deleteBooking } = this.props;
+    deleteBooking(bookingId);
+  }
+
   handleChangeSelectedRoom(roomId) {
     this.setState({
       ...this.state,
       newBooking: {
         ...this.state.newBooking,
         room: roomId,
+      }
+    });
+  }
+
+  handleChangeSelectedBooking(bookingId) {
+    this.setState({
+      ...this.state,
+      newBooking: {
+        ...this.state.newBooking,
+        booking: bookingId,
       }
     });
   }
@@ -212,12 +234,16 @@ class App extends React.Component {
                     <AllBookings loadBookings={this.searchBookingByDate}
                                  bookings={bookings.bookings}
                                  handleChange={this.handleSearchBookingChange}
-                                 user={user}/>
+                                 user={user}
+                                 deleteBooking={this.deleteBooking}
+                                 changeBooking={this.handleChangeSelectedBooking}/>
                   )} />
                   <Route path="/my_bookings" render={() => (
                     <UserBookings user={user}
                                   loadBookings={searchBooking}
                                   bookings={bookings.bookings}
+                                  deleteBooking={this.deleteBooking}
+                                  changeBooking={this.handleChangeSelectedBooking}
                     />
                   )} />
                 {rooms.rooms.length > 0 && rooms.rooms.map(room => (
@@ -226,7 +252,7 @@ class App extends React.Component {
                               handleChange={this.handleBookingChange} 
                               room={room}
                               bookData={this.state.newBooking}
-                              posted={bookings}
+                              posted={bookings.posted}
                               changeRoom={this.handleChangeSelectedRoom}/>
                   )} />
                 ))}
@@ -237,6 +263,8 @@ class App extends React.Component {
                       <RoomBookings room={room}
                                     loadBookings={searchBooking}
                                     bookings={bookings.bookings}
+                                    deleteBooking={this.deleteBooking}
+                                    changeBooking={this.handleChangeSelectedBooking}
                       />
                   )} />
                 ))}
@@ -291,6 +319,7 @@ const mapDispatchToProps = dispatch => ({
              userId,
              start,
              finish) => dispatch(createBooking(roomId, userId, start, finish)),
+  deleteBooking: (bookingId) => dispatch(deleteBooking(bookingId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

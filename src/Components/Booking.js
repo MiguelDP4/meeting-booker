@@ -2,7 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Booking = (props) => {
-  const { bookingInfo, user } = props;
+  const { bookingInfo, user, deleteBooking, bookingsList } = props;
+  const deleteMethod = () => {
+    deleteBooking(bookingInfo.id);
+    const removeIndex = bookingsList
+  }
   return (
     <div>
       <div>Room: {bookingInfo.roomId}</div>
@@ -11,10 +15,8 @@ const Booking = (props) => {
       <div>Meeting End: {bookingInfo.finish}</div>
       { bookingInfo.userId == user.id && (
         <div>
-          <Link key={`booking-editor-link-${bookingInfo.id}`} 
-                to={`/edit_booking_${bookingInfo.id}`}>Edit This Booking</Link>
           <a key={`booking-${bookingInfo.id}-delete`}
-             href="#">Delete This Booking</a>
+             href="#" onClick={deleteMethod}>Delete This Booking</a>
         </div>
         )
       }
