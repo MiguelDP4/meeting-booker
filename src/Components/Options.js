@@ -1,18 +1,24 @@
 import React from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-function Options() {
+const Options = (props) => {
+  const { logOut, clearBookings } = props;
+
+  const logOutAndClear = () => {
+    logOut();
+    clearBookings();
+  }
+
   return (
-    <Router>
-      <div className="options-container">
-        <ul>
-          <li><Link to="/conference_rooms">Conference Rooms</Link></li>
-          <li><Link to="/calendar">Calendar</Link></li>
-          <li><Link to="/my_bookings">My bookings</Link></li>
-          <li><Link to="/log_out">Log Out</Link></li>
-        </ul>
-      </div>
-    </Router>
+    <div className="options-container">
+      <ul>
+        <Link to="/" onClick={clearBookings}><li>Home</li></Link>
+        <Link to="/conference_rooms" onClick={clearBookings}><li>Conference Rooms</li></Link>
+        <Link to="/search_bookings" onClick={clearBookings}><li>Search Bookings</li></Link>
+        <Link to="/my_bookings" onClick={clearBookings}><li>My Bookings</li></Link>
+        <Link to="/" onClick={logOutAndClear} ><li>Log Out</li></Link>
+      </ul>
+    </div>
   );
 }
 
