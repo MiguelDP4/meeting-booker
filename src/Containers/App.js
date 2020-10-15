@@ -211,7 +211,8 @@ class App extends React.Component {
                   <Route path="/search_bookings" render={() => (
                     <AllBookings loadBookings={this.searchBookingByDate}
                                  bookings={bookings.bookings}
-                                 handleChange={this.handleSearchBookingChange}/>
+                                 handleChange={this.handleSearchBookingChange}
+                                 user={user}/>
                   )} />
                   <Route path="/my_bookings" render={() => (
                     <UserBookings user={user}

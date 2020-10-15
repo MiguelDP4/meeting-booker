@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Booking from '../Components/Booking';
 
 function UserBookings(props) {
   const { user, loadBookings, bookings } = props;
@@ -6,12 +7,7 @@ function UserBookings(props) {
   return (
     <div>
         {bookings.length > 0 ? bookings.map(booking => (
-          <div>
-            <div>Room: {booking.roomId}</div>
-            <div>User: {booking.userId}</div>
-            <div>Meeting Start: {booking.start}</div>
-            <div>Meeting End: {booking.finish}</div>
-          </div>
+          <Booking bookingInfo={booking} user={user} />
         )) : (<div>Could not find any bookings</div>)}
     </div>
   );

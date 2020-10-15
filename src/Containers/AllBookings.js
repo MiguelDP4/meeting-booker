@@ -2,7 +2,7 @@ import React from 'react';
 import Booking from '../Components/Booking';
 
 function AllBookings(props) {
-  const { loadBookings, bookings, handleChange } = props;
+  const { loadBookings, bookings, handleChange, user } = props;
   
   return (
     <div>
@@ -29,7 +29,7 @@ function AllBookings(props) {
       </form>
       <div>
         {bookings.length > 0 ? bookings.map(booking => (
-          <Booking bookingInfo={booking} />
+          <Booking bookingInfo={booking} user={user} />
         )) : (<div>Could not find any bookings</div>)}
       </div>
     </div>
