@@ -31,7 +31,7 @@ export const LOG_IN_PENDING = 'LOG_IN_PENDING';
 export const LOG_IN_ERROR = 'LOG_IN_ERROR';
 export const LOG_OUT = 'LOG_OUT';
 export const INITIAL_USER_STATE = {
-  pending: true,
+  pending: false,
   loggedIn: false,
   user: {},
 };

@@ -1,3 +1,10 @@
+$main-color: #97bF2a;
+$main-color: rgb(151, 191, 42);
+$main-color-dark: #85a823;
+$light-background: #FFFFFF;
+$light-font: #FFFFFF;
+$titles-font-family: 'Anton', sans-serif;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,7 +14,96 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+button {
+  padding: 0.8em;
+  border-radius: 0.3em;
+  background-color: $main-color;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: $light-font;
+  transition-duration: 0.15s;
+}
+
+button:hover {
+  background-color: $main-color-dark;
+}
+
+input {
+  border: solid 1.5px lightgray;
+  border-radius: 0.25rem;
+  height: calc(1.5em + .75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+input:focus {
+  outline: 0.25em solid rgba(151, 191, 42, 0.5);
+}
+
+.App {
+  display: flex;
+}
+
+.login-background {
+  background-color: $main-color;
+  height: 100vh;
+  width: 100vw;
+  align-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.login-container {
+  background-color: $light-background;
+  width: 50%;
+  height: 50%;
+  min-width: 300px;
+  min-height: 200px;
+  margin: 0 auto;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-inputs-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-button {
+  width: 30%;
+  align-self: left;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 14%;
+  height: 100vh;
+}
+
+.options-list {
+  text-decoration: none;
+  list-style: none;
+}
+
+.options-link {
+  padding: 0.5em;
+  padding-left: 1.5em;
+  text-decoration: none;
+  color: black;
+  font-family: $titles-font-family;
+}
+
+.main-color-background {
+  background-color: $main-color;
+  color: white;
+  transition-duration: 0.5s;
 }

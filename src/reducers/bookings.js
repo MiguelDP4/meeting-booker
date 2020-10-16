@@ -56,7 +56,7 @@ function bookings(state = INITIAL_GET_BOOKING_STATE, action) {
     case DELETE_BOOKING_SUCCESS:
       const newBookingsArray = state.bookings;
       const indexToDelete = newBookingsArray
-      .indexOf(newBookingsArray.find(booking => booking.id == action.deleted.id));
+      .indexOf(newBookingsArray.find(booking => booking.id === action.deleted.id));
       newBookingsArray.splice(indexToDelete, 1);
       return {
         ...state,

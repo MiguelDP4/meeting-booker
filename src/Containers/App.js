@@ -34,7 +34,9 @@ class App extends React.Component {
     this.searchBookingByDate = this.searchBookingByDate.bind(this);
     this.clearLocalBookings = this.clearLocalBookings.bind(this);
     this.deleteBooking = this.deleteBooking.bind(this);
+    this.changeActivePage = this.changeActivePage.bind(this);
     this.state = {
+      activePage: "home",
       newBooking: {
         bookingId: "",
         room: "",
@@ -50,6 +52,13 @@ class App extends React.Component {
         finish: "",
       },
     }
+  }
+
+  changeActivePage(newActivePage) {
+    this.setState({
+      ...this.state,
+      activePage: newActivePage,
+    })
   }
 
   logOut() {
@@ -217,13 +226,13 @@ class App extends React.Component {
             bookings,
             searchBooking,
           } = this.props;
+    const { activePage, newBooking } = this.state;
     return (
       <Router>
-        <div className="App">
         {
-          user.loggedIn ? (
-            <div>
-              <Options logOut={this.logOut} clearBookings={this.clearLocalBookings} />
+          !user.loggedIn ? (
+            <div className="App">
+              <Options activePage={activePage} switchPage={this.changeActivePage} logOut={this.logOut} clearBookings={this.clearLocalBookings} />
                 <Switch>
                   <Route path="/" exact component={Welcome} />
                   <Route path="/conference_rooms" render={() => (
@@ -251,7 +260,7 @@ class App extends React.Component {
                     <BookRoom submit={this.handleBooking} 
                               handleChange={this.handleBookingChange} 
                               room={room}
-                              bookData={this.state.newBooking}
+                              bookData={newBooking}
                               posted={bookings.posted}
                               changeRoom={this.handleChangeSelectedRoom}/>
                   )} />
@@ -272,13 +281,11 @@ class App extends React.Component {
                 </Switch>
             </div>
           ) : (
-            <div>
-              <Login clickLogIn={this.handleLogIn} />
-              <Welcome />
+            <div className="App">
+              <Login clickLogIn={this.handleLogIn} user={user} />
             </div>
           )
         }
-      </div>
     </Router>
     );
   }
