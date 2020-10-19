@@ -1,15 +1,21 @@
 $main-color: #97bF2a;
-$main-color: rgb(151, 191, 42);
 $main-color-dark: #85a823;
 $light-background: #FFFFFF;
 $light-font: #FFFFFF;
+$default-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+sans-serif;
 $titles-font-family: 'Anton', sans-serif;
+$breakpoint-small: 650px;
+$breakpoint-medium: 926px;
+
+h1, h2, h3, h4 {
+  font-family: $titles-font-family;
+}
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: $default-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -44,12 +50,14 @@ input:focus {
 
 .App {
   display: flex;
+  height: 100vh;
+  width: 100vw;
 }
 
 .login-background {
   background-color: $main-color;
-  height: 100vh;
-  width: 100vw;
+  width: 100%;
+  height: 100%;
   align-content: center;
   display: flex;
   align-items: center;
@@ -78,7 +86,7 @@ input:focus {
 
 .login-button {
   width: 30%;
-  align-self: left;
+  min-width: 70px;
 }
 
 .options-container {
@@ -86,7 +94,9 @@ input:focus {
   flex-direction: column;
   justify-content: center;
   width: 14%;
+  min-width: 170px;
   height: 100vh;
+  box-shadow: 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12), 0 11px 15px -7px rgba(0,0,0,.2);
 }
 
 .options-list {
@@ -106,4 +116,108 @@ input:focus {
   background-color: $main-color;
   color: white;
   transition-duration: 0.5s;
+}
+
+.conference-room-container {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.conference-room-list {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  min-width: 650px;
+}
+
+.conference-room {
+  &:hover {
+  transition-duration: 0.5s;
+  background-color: #ddd;
+  }
+  h3 {
+    margin: 0;
+    font-size: 1.1em;
+  }
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin: 5px;
+  box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.14), 0 3px 25px 2px rgba(0, 0, 0, 0.12), 0 1px 3px 1px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  transition-duration: 0.5s;
+}
+
+.conference-room-info {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: $breakpoint-medium) {
+  .conference-room-list {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    min-width: 0px;
+  }
+  .conference-room {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+  .conference-room-info {
+    h3 {
+      font-family: $default-font;
+      font-size: 1em;
+      font-weight: normal;
+      margin-right: 1em;
+    }
+    div {
+      margin-right: 1em;
+    }
+    flex-direction: row;
+    margin-bottom: 5%;
+  }
+  .conference-room-buttons {
+    margin-top: 5%;
+    width: 100%;
+  }
+}
+
+.conference-room-image {
+  img {
+    width: 100%;
+  }
+  width: 40%;
+}
+
+.conference-room-buttons {
+  a {
+    &:hover {
+      background-color: $main-color-dark;
+    }
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    border-radius: 0.3em;
+    background-color: $main-color;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: $light-font;
+    transition-duration: 0.15s;
+    text-decoration: none;
+    margin: 2px;
+  }
+  display: flex;
+  flex-direction: column;
 }

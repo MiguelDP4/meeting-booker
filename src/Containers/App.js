@@ -19,7 +19,6 @@ import { logIn,
          deleteBooking,
         } from "../actions/index";
 import Login from "../Components/Login";
-import bookings from "../reducers/bookings";
 
 class App extends React.Component {
   constructor() {
@@ -222,8 +221,8 @@ class App extends React.Component {
   render() {
     const { user,
             rooms,
-            loadRooms,
             bookings,
+            loadRooms,
             searchBooking,
           } = this.props;
     const { activePage, newBooking } = this.state;
