@@ -2,12 +2,21 @@ $main-color: #97bF2a;
 $main-color-dark: #85a823;
 $light-background: #FFFFFF;
 $light-font: #FFFFFF;
+$dark-background: #ddd;
 $default-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
 sans-serif;
 $titles-font-family: 'Anton', sans-serif;
 $breakpoint-small: 650px;
 $breakpoint-medium: 926px;
+
+  
+$shallow-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.14),
+                 0 3px 25px 2px rgba(0, 0, 0, 0.12),
+                 0 1px 3px 1px rgba(0, 0, 0, 0.2);
+$deep-shadow: 0 24px 38px 3px rgba(0,0,0,.14),
+              0 9px 46px 8px rgba(0,0,0,.12),
+              0 11px 15px -7px rgba(0,0,0,.2);
 
 h1, h2, h3, h4 {
   font-family: $titles-font-family;
@@ -18,6 +27,7 @@ body {
   font-family: $default-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: $dark-background;
 }
 
 button {
@@ -90,13 +100,14 @@ input:focus {
 }
 
 .options-container {
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 14%;
   min-width: 170px;
   height: 100vh;
-  box-shadow: 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12), 0 11px 15px -7px rgba(0,0,0,.2);
+  box-shadow: $deep-shadow;
 }
 
 .options-list {
@@ -143,13 +154,14 @@ input:focus {
     margin: 0;
     font-size: 1.1em;
   }
+  background-color: $light-background;
   width: 100%;
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 30px;
   padding-bottom: 30px;
   margin: 5px;
-  box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.14), 0 3px 25px 2px rgba(0, 0, 0, 0.12), 0 1px 3px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: $shallow-shadow;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -220,4 +232,137 @@ input:focus {
   }
   display: flex;
   flex-direction: column;
+}
+
+.booking-search-window {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.booking-search-container {
+  padding-left: 80px;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.booking-search-menu {
+  flex: 1;
+}
+
+.booking-search-bar {
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  background-color: $light-background;
+  box-shadow: $shallow-shadow;
+  padding: 35px 55px;
+  border-radius: 5px;
+}
+
+.booking-search-result-list {
+  padding-top: 40px;
+  flex: 5;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.booking {
+  &:hover {
+    transition-duration: 0.5s;
+    background-color: #ddd;
+    }
+    width: 80%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin: 5px;
+    box-shadow: $shallow-shadow;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    transition-duration: 0.5s;
+    background-color: $light-background;
+}
+
+.delete-booking-button {
+  button {
+    height: 100%;
+  }
+}
+
+.bookings-container {
+  padding-top: 30px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+}
+
+.book-room-window {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  flex-direction: column;
+}
+
+.book-room-container {
+  padding-top: 80px;
+  padding-left: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.book-room-menu {
+  flex: 1;
+}
+
+.book-creation-bar {
+  background-color: $light-background;
+  padding: 40px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: $shallow-shadow;
+}
+
+.booking-room-information {
+  padding-top: 40px;
+  flex: 5;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.book-button {
+  padding: 0.8em;
+  border-radius: 0.3em;
+  background-color: $main-color;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: $light-font;
+  transition-duration: 0.15s;
+}
+
+.welcome-page {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-content {
+  h2 {
+    letter-spacing: 1.2px;
+  }
+  width: 80%;
 }

@@ -229,7 +229,7 @@ class App extends React.Component {
     return (
       <Router>
         {
-          !user.loggedIn ? (
+          user.loggedIn ? (
             <div className="App">
               <Options activePage={activePage} switchPage={this.changeActivePage} logOut={this.logOut} clearBookings={this.clearLocalBookings} />
                 <Switch>

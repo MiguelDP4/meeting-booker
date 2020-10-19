@@ -52,6 +52,7 @@ function bookings(state = INITIAL_GET_BOOKING_STATE, action) {
       return {
         ...state,
         bookings: [],
+        posted: {},
       };
     case DELETE_BOOKING_SUCCESS:
       const newBookingsArray = state.bookings;
