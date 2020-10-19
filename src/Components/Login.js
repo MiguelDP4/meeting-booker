@@ -1,22 +1,29 @@
 import React from 'react';
 
 const Login = (props) => {
-  const { clickLogIn } = props;
+  const { clickLogIn, user } = props;
   return (
-    <div>
-      <input
-        type="text"
-        id="user-name"
-        placeholder="Username"
-        className=""
-      />
-      <input
-        type="password"
-        id="user-password"
-        placeholder="Password"
-        className=""
-      />
-      <button type="button" onClick={clickLogIn}>Log In</button>
+    <div className="login-background">
+      <div className="login-container">
+        <div className="login-inputs-container">
+          <input
+          type="text"
+          id="user-name"
+          placeholder="Username"
+          className="input-text"
+          />
+          <input
+            type="password"
+            id="user-password"
+            placeholder="Password"
+            className="input-text"
+          />
+            <div>
+              <button type="button" onClick={clickLogIn} className="login-button">Log In</button>
+              {user.pending && <span>Loading...</span>}
+            </div>
+          </div>
+      </div>
     </div>
   );
 };

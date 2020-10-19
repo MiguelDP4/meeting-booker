@@ -30,7 +30,7 @@ function user(state = INITIAL_USER_STATE, action) {
       }
     case LOG_OUT:
       return {
-        pending: true,
+        pending: false,
         loggedIn: false,
         name: null,
         id: null,
