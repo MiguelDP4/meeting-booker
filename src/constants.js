@@ -29,7 +29,7 @@ export const LOG_OUT = 'LOG_OUT';
 export const INITIAL_USER_STATE = {
   pending: false,
   loggedIn: false,
-  name: "",
+  name: '',
   id: null,
 };
 
