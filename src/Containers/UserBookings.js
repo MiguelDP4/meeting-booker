@@ -8,7 +8,7 @@ function UserBookings(props) {
       <div class="bookings-container">
           {bookings.length > 0 ? bookings.map(booking => (
             <Booking bookingsList={bookings} bookingInfo={booking} user={user} deleteBooking={deleteBooking}/>
-          )) : (<div>Could not find any bookings</div>)}
+          )) : (<div>Searching user bookings</div>)}
       </div>
   );
 }

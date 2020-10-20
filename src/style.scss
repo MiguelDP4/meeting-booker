@@ -19,6 +19,7 @@ $deep-shadow: 0 24px 38px 3px rgba(0,0,0,.14),
               0 11px 15px -7px rgba(0,0,0,.2);
 
 h1, h2, h3, h4 {
+  letter-spacing: 2px;
   font-family: $titles-font-family;
 }
 
@@ -118,6 +119,7 @@ input:focus {
 }
 
 .options-logo {
+  font-size: 0.8em;
   align-self: flex-start;
   text-align: center;
 }
@@ -429,6 +431,20 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-page-image {
+  opacity: 40%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: auto;
+  min-height: 100%;
 }
 
 .welcome-content {
@@ -436,4 +452,12 @@ input:focus {
     letter-spacing: 1.2px;
   }
   width: 80%;
+}
+
+@media (max-width: $breakpoint-medium) {
+  .welcome-page-image {
+    height: 100%;
+    width: auto;
+    min-width: 100%;
+  }
 }
