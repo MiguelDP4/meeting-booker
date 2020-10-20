@@ -1,4 +1,3 @@
-
 export const GET_ROOMS_SUCCESS = 'GET_ROOMS_SUCCESS';
 export const GET_ROOMS_PENDING = 'GET_ROOMS_PENDING';
 export const GET_ROOMS_ERROR = 'GET_ROOMS_ERROR';
@@ -23,9 +22,6 @@ export const INITIAL_GET_BOOKING_STATE = {
   posted: {},
 };
 
-
-
-
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_PENDING = 'LOG_IN_PENDING';
 export const LOG_IN_ERROR = 'LOG_IN_ERROR';
@@ -33,7 +29,8 @@ export const LOG_OUT = 'LOG_OUT';
 export const INITIAL_USER_STATE = {
   pending: false,
   loggedIn: false,
-  user: {},
+  name: '',
+  id: null,
 };
 
 export const INITIAL_STORE_STATE = {

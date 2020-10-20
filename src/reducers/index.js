@@ -9,5 +9,5 @@ import rooms from './rooms';
 export default combineReducers({
   rooms,
   bookings,
-  user
+  user,
 });

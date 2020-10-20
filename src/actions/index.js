@@ -1,39 +1,40 @@
-import { LOG_IN_ERROR,
-         LOG_IN_PENDING,
-         LOG_IN_SUCCESS,
-         GET_ROOMS_ERROR,
-         GET_ROOMS_PENDING,
-         GET_ROOMS_SUCCESS,
-         GET_BOOKINGS_ERROR,
-         GET_BOOKINGS_PENDING,
-         GET_BOOKINGS_SUCCESS,
-         POST_BOOKING_SUCCESS,
-         POST_BOOKING_PENDING,
-         POST_BOOKING_ERROR,
-         DELETE_BOOKING_ERROR,
-         DELETE_BOOKING_PENDING,
-         DELETE_BOOKING_SUCCESS,
-         LOG_OUT,
-         CLEAR_LOCAL_BOOKINGS,
-        } from '../constants';
-import {  ApiLogIn,
-          ApiGetRooms,
-          ApiGetBookings,
-          ApiCreateBooking,
-          ApiDeleteBooking,
-       } from '../ApiCalls'
-
+import {
+  LOG_IN_ERROR,
+  LOG_IN_PENDING,
+  LOG_IN_SUCCESS,
+  GET_ROOMS_ERROR,
+  GET_ROOMS_PENDING,
+  GET_ROOMS_SUCCESS,
+  GET_BOOKINGS_ERROR,
+  GET_BOOKINGS_PENDING,
+  GET_BOOKINGS_SUCCESS,
+  POST_BOOKING_SUCCESS,
+  POST_BOOKING_PENDING,
+  POST_BOOKING_ERROR,
+  DELETE_BOOKING_ERROR,
+  DELETE_BOOKING_PENDING,
+  DELETE_BOOKING_SUCCESS,
+  LOG_OUT,
+  CLEAR_LOCAL_BOOKINGS,
+} from '../constants';
+import {
+  ApiLogIn,
+  ApiGetRooms,
+  ApiGetBookings,
+  ApiCreateBooking,
+  ApiDeleteBooking,
+} from '../ApiCalls';
 
 const LogInPending = pending => ({
   type: LOG_IN_PENDING,
-  pending
+  pending,
 });
 
 const LogInError = user => ({
   type: LOG_IN_ERROR,
   name: user.name,
   id: user.id,
-})
+});
 
 const LogInSuccess = user => ({
   type: LOG_IN_SUCCESS,
@@ -44,12 +45,11 @@ const LogInSuccess = user => ({
 export const logIn = (username, password) => async dispatch => {
   dispatch(LogInPending());
   const response = await ApiLogIn(username, password);
-    if(response.name) {
-    return dispatch(LogInSuccess(response))
-  } else {
-    return dispatch(LogInError({name: null, id: null}));
+  if (response.name) {
+    return dispatch(LogInSuccess(response));
   }
-}
+  return dispatch(LogInError({ name: null, id: null }));
+};
 
 export const logOut = () => ({
   type: LOG_OUT,
@@ -57,30 +57,29 @@ export const logOut = () => ({
 
 const LoadRoomsPending = pending => ({
   type: GET_ROOMS_PENDING,
-  pending
+  pending,
 });
 
 const LoadRoomsError = error => ({
   type: GET_ROOMS_ERROR,
-  error
-})
+  error,
+});
 
 const LoadRoomsSuccess = rooms => ({
   type: GET_ROOMS_SUCCESS,
-  rooms
+  rooms,
 });
 
 export const loadRooms = () => async dispatch => {
   dispatch(LoadRoomsPending());
   const response = await ApiGetRooms();
-    if(response) {
-    return dispatch(LoadRoomsSuccess(response))
-  } else {
-    return dispatch(LoadRoomsError({
-      message: 'Could not find rooms'
-    }));
+  if (response) {
+    return dispatch(LoadRoomsSuccess(response));
   }
-}
+  return dispatch(LoadRoomsError({
+    message: 'Could not find rooms',
+  }));
+};
 
 export const clearBookings = () => ({
   type: CLEAR_LOCAL_BOOKINGS,
@@ -88,83 +87,80 @@ export const clearBookings = () => ({
 
 const loadBookingsPending = pending => ({
   type: GET_BOOKINGS_PENDING,
-  pending
+  pending,
 });
 
 const loadBookingsSuccess = bookings => ({
   type: GET_BOOKINGS_SUCCESS,
-  bookings
+  bookings,
 });
 
 const loadBookingsError = error => ({
   type: GET_BOOKINGS_ERROR,
-  error
+  error,
 });
 
-export const loadBookings = (roomId = null, userId = null, 
-                             lowLimit = null,
-                             highLimit = null) => async dispatch => {
+export const loadBookings = (roomId = null, userId = null,
+  lowLimit = null,
+  highLimit = null) => async dispatch => {
   dispatch(loadBookingsPending());
   const response = await ApiGetBookings(roomId, userId, lowLimit, highLimit);
-    if(response) {
-    return dispatch(loadBookingsSuccess(response))
-  } else {
-    return dispatch(loadBookingsError({
-      message: 'Could not find any bookings with your parameters'
-    }));
+  if (response) {
+    return dispatch(loadBookingsSuccess(response));
   }
-}
+  return dispatch(loadBookingsError({
+    message: 'Could not find any bookings with your parameters',
+  }));
+};
 
 const createBookingPending = pending => ({
   type: POST_BOOKING_PENDING,
-  pending
+  pending,
 });
 
 const createBookingSuccess = posted => ({
   type: POST_BOOKING_SUCCESS,
-  posted
+  posted,
 });
 
 const createBookingError = error => ({
   type: POST_BOOKING_ERROR,
-  error
+  error,
 });
 
 export const createBooking = (userId, roomId, start, finish) => async dispatch => {
   dispatch(createBookingPending());
   const response = await ApiCreateBooking(roomId, userId, start, finish);
-    if(response) {
-    return dispatch(createBookingSuccess(response))
-  } else {
-    return dispatch(createBookingError({
-      message: 'Could not find any bookings with your parameters'
-    }));
+  if (response) {
+    return dispatch(createBookingSuccess(response));
   }
+  return dispatch(createBookingError({
+    message: 'Could not find any bookings with your parameters',
+  }));
 };
 
 const deleteBookingPending = pending => ({
   type: DELETE_BOOKING_PENDING,
-  pending
+  pending,
 });
 
 const deleteBookingSuccess = deleted => ({
   type: DELETE_BOOKING_SUCCESS,
-  deleted
+  deleted,
 });
 
 const deleteBookingError = error => ({
   type: DELETE_BOOKING_ERROR,
-  error
+  error,
 });
 
-export const deleteBooking = (bookingId) => async dispatch => {
+export const deleteBooking = bookingId => async dispatch => {
   dispatch(deleteBookingPending());
   const response = await ApiDeleteBooking(bookingId);
-    if(response) {
-    return dispatch(deleteBookingSuccess(response))
-  } else {
-    return dispatch(deleteBookingError({
-      message: 'Could not find any bookings with your parameters'
-    }));
+  if (response) {
+    return dispatch(deleteBookingSuccess(response));
   }
+  return dispatch(deleteBookingError({
+    message: 'Could not find any bookings with your parameters',
+  }));
 };

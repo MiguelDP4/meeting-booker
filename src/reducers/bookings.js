@@ -13,6 +13,8 @@ import {
 } from '../constants';
 
 function bookings(state = INITIAL_GET_BOOKING_STATE, action) {
+  let newBookingsArray = [];
+  let indexToDelete;
   switch (action.type) {
     case GET_BOOKINGS_PENDING:
       return {
@@ -55,9 +57,9 @@ function bookings(state = INITIAL_GET_BOOKING_STATE, action) {
         posted: {},
       };
     case DELETE_BOOKING_SUCCESS:
-      const newBookingsArray = state.bookings;
-      const indexToDelete = newBookingsArray
-      .indexOf(newBookingsArray.find(booking => booking.id === action.deleted.id));
+      newBookingsArray = [...state.bookings];
+      indexToDelete = newBookingsArray
+        .indexOf(newBookingsArray.find(booking => booking.id === action.deleted.id));
       newBookingsArray.splice(indexToDelete, 1);
       return {
         ...state,
@@ -74,7 +76,7 @@ function bookings(state = INITIAL_GET_BOOKING_STATE, action) {
         ...state,
         pending: false,
         error: action.error,
-      }
+      };
     default:
       return state;
   }
