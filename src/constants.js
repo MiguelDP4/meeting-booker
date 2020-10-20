@@ -29,7 +29,8 @@ export const LOG_OUT = 'LOG_OUT';
 export const INITIAL_USER_STATE = {
   pending: false,
   loggedIn: false,
-  user: {},
+  name: "",
+  id: null,
 };
 
 export const INITIAL_STORE_STATE = {
