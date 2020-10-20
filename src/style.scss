@@ -1,24 +1,26 @@
-$main-color: #97bF2a;
+$main-color: #97bf2a;
 $main-color-dark: #85a823;
-$light-background: #FFFFFF;
-$light-font: #FFFFFF;
+$light-background: #fff;
+$light-font: #fff;
 $dark-background: #ddd;
-$default-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-sans-serif;
+$default-font: -apple-system, blinkmacsystemfont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
 $titles-font-family: 'Anton', sans-serif;
 $breakpoint-small: 650px;
 $breakpoint-medium: 926px;
 
-  
 $shallow-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.14),
-                 0 3px 25px 2px rgba(0, 0, 0, 0.12),
-                 0 1px 3px 1px rgba(0, 0, 0, 0.2);
-$deep-shadow: 0 24px 38px 3px rgba(0,0,0,.14),
-              0 9px 46px 8px rgba(0,0,0,.12),
-              0 11px 15px -7px rgba(0,0,0,.2);
+  0 3px 25px 2px rgba(0, 0, 0, 0.12),
+  0 1px 3px 1px rgba(0, 0, 0, 0.2);
+$deep-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
+  0 9px 46px 8px rgba(0, 0, 0, 0.12),
+  0 11px 15px -7px rgba(0, 0, 0, 0.2);
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   letter-spacing: 2px;
   font-family: $titles-font-family;
 }
@@ -49,7 +51,7 @@ button:hover {
 input {
   border: solid 1.5px lightgray;
   border-radius: 0.25rem;
-  height: calc(1.5em + .75rem + 2px);
+  height: calc(1.5em + 0.75rem + 2px);
   padding: 0.375rem 0.75rem;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
@@ -147,13 +149,16 @@ input:focus {
   &::-webkit-scrollbar {
     width: 10px;
   }
+
   &::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   }
+
   &::-webkit-scrollbar-thumb {
     background-color: $main-color;
     outline: 1px solid $main-color-dark;
   }
+
   flex: 1;
   height: 100%;
   overflow: auto;
@@ -171,13 +176,15 @@ input:focus {
 
 .conference-room {
   &:hover {
-  transition-duration: 0.5s;
-  background-color: #ddd;
+    transition-duration: 0.5s;
+    background-color: #ddd;
   }
+
   h3 {
     margin: 0;
     font-size: 1.1em;
   }
+
   background-color: $light-background;
   width: 100%;
   padding-left: 20px;
@@ -201,6 +208,7 @@ input:focus {
   img {
     width: 100%;
   }
+
   width: 40%;
 }
 
@@ -209,6 +217,7 @@ input:focus {
     &:hover {
       background-color: $main-color-dark;
     }
+
     padding-left: 0.3em;
     padding-right: 0.3em;
     padding-top: 0.8em;
@@ -223,6 +232,7 @@ input:focus {
     text-decoration: none;
     margin: 2px;
   }
+
   display: flex;
   flex-direction: column;
 }
@@ -258,13 +268,16 @@ input:focus {
   &::-webkit-scrollbar {
     width: 10px;
   }
+
   &::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   }
+
   &::-webkit-scrollbar-thumb {
     background-color: $main-color;
     outline: 1px solid $main-color-dark;
   }
+
   padding-top: 40px;
   flex: 5;
   overflow: auto;
@@ -278,13 +291,15 @@ input:focus {
     width: 80%;
     display: flex;
     flex-direction: column;
-    min-width: 0px;
+    min-width: 0;
   }
+
   .conference-room {
     width: 100%;
     flex-direction: column;
     align-items: center;
   }
+
   .conference-room-info {
     h3 {
       font-family: $default-font;
@@ -292,12 +307,15 @@ input:focus {
       font-weight: normal;
       margin-right: 1em;
     }
+
     div {
       margin-right: 1em;
     }
+
     flex-direction: row;
     margin-bottom: 5%;
   }
+
   .conference-room-buttons {
     margin-top: 5%;
     width: 100%;
@@ -311,14 +329,15 @@ input:focus {
 
   .booking-search-bar {
     input {
-      height: calc(1em + .35rem + 2px);
+      height: calc(1em + 0.35rem + 2px);
     }
+
     margin: 0;
     padding: 15px 35px;
   }
 
   .booking-search-result-list {
-    overflow: overlay;
+    overflow: auto;
     padding-top: 10px;
   }
 }
@@ -327,19 +346,20 @@ input:focus {
   &:hover {
     transition-duration: 0.5s;
     background-color: #ddd;
-    }
-    width: 80%;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    margin: 5px;
-    box-shadow: $shallow-shadow;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    transition-duration: 0.5s;
-    background-color: $light-background;
+  }
+
+  width: 80%;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin: 5px;
+  box-shadow: $shallow-shadow;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  transition-duration: 0.5s;
+  background-color: $light-background;
 }
 
 .delete-booking-button {
@@ -352,13 +372,16 @@ input:focus {
   &::-webkit-scrollbar {
     width: 10px;
   }
+
   &::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   }
+
   &::-webkit-scrollbar-thumb {
     background-color: $main-color;
     outline: 1px solid $main-color-dark;
   }
+
   padding-top: 30px;
   flex: 1;
   display: flex;
@@ -400,13 +423,16 @@ input:focus {
   &::-webkit-scrollbar {
     width: 10px;
   }
+
   &::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   }
+
   &::-webkit-scrollbar-thumb {
     background-color: $main-color;
     outline: 1px solid $main-color-dark;
   }
+
   padding-top: 40px;
   flex: 5;
   overflow: auto;
@@ -436,7 +462,7 @@ input:focus {
 }
 
 .welcome-page-image {
-  opacity: 40%;
+  opacity: 0.4;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -451,6 +477,7 @@ input:focus {
   h2 {
     letter-spacing: 1.2px;
   }
+
   width: 80%;
 }
 
