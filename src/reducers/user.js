@@ -27,7 +27,7 @@ function user(state = INITIAL_USER_STATE, action) {
         loggedIn: false,
         name: action.name,
         id: action.id,
-      }
+      };
     case LOG_OUT:
       return {
         pending: false,

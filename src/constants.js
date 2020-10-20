@@ -1,4 +1,3 @@
-
 export const GET_ROOMS_SUCCESS = 'GET_ROOMS_SUCCESS';
 export const GET_ROOMS_PENDING = 'GET_ROOMS_PENDING';
 export const GET_ROOMS_ERROR = 'GET_ROOMS_ERROR';
@@ -22,9 +21,6 @@ export const INITIAL_GET_BOOKING_STATE = {
   bookings: [],
   posted: {},
 };
-
-
-
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_PENDING = 'LOG_IN_PENDING';
