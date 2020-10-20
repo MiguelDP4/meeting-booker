@@ -46,7 +46,7 @@ function ConferenceRooms(props) {
                 <div><b>Projector:</b> {room.projector ? "yes" : "no"}</div>
               </div>
               <div className="conference-room-image">
-                <img src={chooseRoomImage(room.id)}></img>
+                <img src={chooseRoomImage(room.id)} alt={`room_${room.id}_image`} ></img>
               </div>
               <div className="conference-room-buttons">
                 <Link key={`room-${room.id}-booker-link`} to={`/book_room_${room.id}`}>

@@ -102,7 +102,7 @@ class App extends React.Component {
   }
 
   clearLocalBookings() {
-    const { clearBookings, bookings } = this.props;
+    const { clearBookings } = this.props;
     clearBookings();
   }
 
@@ -198,6 +198,7 @@ class App extends React.Component {
         ...searchBooking,
         userId: event.target.value,
       };
+      break;
       case "room-id-search":
       newState = {
         ...searchBooking,
